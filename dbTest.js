@@ -1,5 +1,5 @@
-var db = require('./models')
-var async = require('async')
+const db = require('./models')
+const async = require('async')
 // Create a category: Category model must exist and be migrated
 
 // db.category.create({
@@ -11,7 +11,7 @@ var async = require('async')
 // Create a project and use the helper function create<ModelName> to create a category
 // Requires categoriesProjects to exist, be migrated, and properly associated
 
-var cats = ['node', 'javascript', 'react', 'css', 'html']
+const cats = ['node', 'javascript', 'react', 'css', 'html']
 
 db.project.create({
   name: 'PROJECT TWO',
