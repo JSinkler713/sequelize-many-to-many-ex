@@ -49,7 +49,7 @@ Once this model has been created, run the migration for the model and test the m
 **dbTest.js**
 
 ```js
-var db = require('./models')
+const db = require('./models')
 
 db.category.create({
   name: 'node'
@@ -65,7 +65,7 @@ In order to associate a category to many projects, and a project to many categor
 Once created, add the associations need to create a many-to-many association between categories and projects, using the join table you just created. Be sure to test this functionality by creating categories and projects, then seeing if you can include them in different queries.
 
 ```js
-var db = require('./models')
+const db = require('./models')
 
 db.project.findOne({
   where: { id: 1 },
