@@ -1,6 +1,6 @@
 # Express Project Organizer
 
-To practice N:M associations, we'll be adding the ability to categorize projects in an existing project organizer.
+To practice M:M associations, we'll be adding the ability to categorize projects in an existing project organizer.
 
 #### Backstory: Project Organizer
 
