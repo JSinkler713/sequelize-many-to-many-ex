@@ -46,3 +46,41 @@ const db = require('./models')
 //   console.log(error)
 // })
 
+
+
+// const postRouteEx = async() => {
+//   try{
+//     console.log("in the post route")
+//     // pretendng we have a req.body like we will
+//     const req = {}
+//     req.body= {
+//       name: 'hey',
+//       githubLink: 'aslkdfj.com',
+//       deployedLink: 'www.google.com',
+//       description: 'project description here',
+//       category: 'category name here'
+//     }
+//     const project = await db.project.create({
+//       name: req.body.name,
+//       githubLink: req.body.githubLink,
+//       deployLink: req.body.deployedLink,
+//       description: req.body.description,
+//     })
+//     const [category, wasCreated] = await db.category.findOrCreate({
+//       where:{
+//         name: req.body.category
+//       },
+//       include: [db.project]
+//     })
+//       await category.addProject(project)
+//       
+//       console.log(category)
+//       console.log(category.projects)
+//       // not a real route res.redirect('/project/catshow')
+//   } catch(e){
+//     console.log(e.message)
+//   }
+// }
+// call the function
+// postRouteEx()
+
