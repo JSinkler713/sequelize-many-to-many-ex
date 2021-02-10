@@ -1,58 +1,48 @@
 const db = require('./models')
-const async = require('async')
-// Create a category: Category model must exist and be migrated
 
+// RUN THIS FIRST SO WE HAVE A PROJECT WITH ID=1
 // db.category.create({
 //   name: 'node'
 // }).then(function(category) {
 //   console.log(category.get())
 // })
 
-// Create a project and use the helper function create<ModelName> to create a category
-// Requires categoriesProjects to exist, be migrated, and properly associated
+/* FIND the first project, associate with a found or created category */
+// db.project.findOne({
+//   where: { id: 1 },
+//   include: [db.category]
+// })
+// .then(function(project) {
+//   db.category.findOrCreate({ where: {name: 'awesome'}})
+//   .then(([category, created])=> {
+//     console.log(category.get())
+//     console.log('***********************')
+//     console.log(project)
+//     project.addCategory(category)
+//     console.log(project.get())
+//   })
+// }).catch((error)=> {
+//   console.log(error)
+// })
 
-const cats = ['node', 'javascript', 'react', 'css', 'html']
+/* FIND a Category, CREATE a new project, Associate them */
+// db.category.findOne({
+//   where: { name: 'node'}
+// })
+// .then((category)=> {
+//   // we have category, now make a new project to associate it with
+//   db.project.create({
+//     name: 'PEN Stack',
+//     description: 'A project using postgres Express and Node'
+//   })
+//     .then((project)=> {
+//       // addProject takes existing project and makes association
+//       category.addProject(project).then(response=> {
+//         console.log(response)
+//       })
+//     })
+// })
+// .catch((error)=> {
+//   console.log(error)
+// })
 
-db.project.create({
-  name: 'PROJECT TWO',
-  deployLink: 'http://github.com/brandiw',
-  githubLink: 'http://github.com/brandiw',
-  description: 'This was a game'
-}).then(function(project) {
-  // IMPROVED VERSION WITH ASYNC
-  // async.forEach(arrayToIterate, iteratorFunctionToRunOnEachItem(item, callback), functionToRunWhenAllComplete)
-  async.forEach(cats, (cat, done) => {
-    db.category.findOrCreate({
-      where: { name: cat }
-    })
-    .spread((category, wasCreated) => {
-      project.addCategory(category)
-      .then(() => {
-        // res.redirect, or whatevs
-        console.log('done adding', cat)
-        done()
-      })
-    })
-  }, () => {
-    console.log('EVERYTHING is done. Now redirect or something')
-  })
-
-
-
-
-
-  // TIMING DOESNOT WORK
-  // cats.forEach((cat) => {
-  //   db.category.findOrCreate({
-  //     where: { name: cat }
-  //   })
-  //   .spread((category, wasCreated) => {
-  //     project.addCategory(category)
-  //     .then(() => {
-  //       // res.redirect, or whatevs
-  //       console.log('done adding', cat)
-  //     })
-  //   })
-  // })
-  // console.log('redirect or something')
-})
