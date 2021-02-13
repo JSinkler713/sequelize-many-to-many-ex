@@ -11,11 +11,14 @@ router.post('/', async(req, res) => {
       deployLink: req.body.deployedLink,
       description: req.body.description
     })
-    const [category, wasCreated] = await db.project.findOrCreate({
+    const [category, wasCreated] = await db.category.findOrCreate({
       where: {
         name: req.body.category
       }
     })
+    await category.addProject(newProject)
+    // we could also do the following, both work
+    // await newProject.addCategory(category) 
     res.redirect('/')
   }
   catch(error) {
@@ -31,10 +34,12 @@ router.get('/new', (req, res) => {
 // GET /projects/:id - display a specific project
 router.get('/:id', (req, res) => {
   db.project.findOne({
-    where: { id: req.params.id }
+    where: { id: req.params.id },
+    include: [db.category]
   })
   .then((project) => {
     if (!project) throw Error()
+    console.log(project)
     res.render('projects/show', { project: project })
   })
   .catch((error) => {
