@@ -70,14 +70,14 @@ const db = require('./models')
 db.project.findOne({
   where: { id: 1 },
   include: [db.category]
-}).then(function(project) {
-  // by using eager loading, the project model should have a categories key
-  console.log(project.categories)
-
-  // addCategory function should be available to this model
-  project.addCategory({ name: 'node' }).then(function(category) {
-    console.log(category.id)
+})
+.then(function(project) {
+  db.category.findOrCreate({ where: {name: 'awesome'}})
+  .then(([category, created])=> {
+    project.addCategory(category)
   })
+}).catch((error)=> {
+  console.log(error)
 })
 ```
 
@@ -87,11 +87,11 @@ Note that these are two possible queries you can perform. There are others that 
 
 Now that the models have been created, you'll want to add the ability to create categories, view categories, and view projects by category to the rest of the application. Here is an approach you can take:
 
-* Add a field to the existing view associated with `GET /projects/new`. This new field should accept a new category name. 
+  * Add a field to the existing view associated with `GET /projects/new`. This new field should accept a new category name. 
   * Keep in mind that categories should be associated with projects
   * Category names should be unique; the category model should have no duplicates (hint, use `findOrCreate`)
-* Add to the view associated withe the `POST /projects` route, which allows the user to add categories to each individual project. 
-* Create the following routes for viewing categories and viewing projects by category:
+  * Add to the view associated with the `GET /projects/:id` route, which allows the user to add categories to each individual project. Remember to handle the post route associated with this form submit.
+  * Create the following routes for viewing categories and viewing projects by category:
   * `GET /categories` - show all the categories that exist
   * `GET /categories/:id` - show a specific category and all the projects with that category
 
