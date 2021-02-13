@@ -1,11 +1,11 @@
 const db = require('./models')
 
 // RUN THIS FIRST SO WE HAVE A PROJECT WITH ID=1
-// db.category.create({
-//   name: 'node'
-// }).then(function(category) {
-//   console.log(category.get())
-// })
+db.category.create({
+  name: 'node'
+}).then(function(category) {
+  console.log(category.get())
+})
 
 /* FIND the first project, associate with a found or created category */
 // db.project.findOne({
@@ -47,11 +47,14 @@ const db = require('./models')
 // })
 
 
-
+// async function similar to what will be used in routes
+// creates a project,
+// finds or creates a category,
+// and then associates them
 const postRouteEx = async() => {
   try{
     console.log("in the post route")
-    // pretendng we have a req.body like we will
+    // pretending we have a req.body like we will in routes
     const req = {}
     req.body= {
       name: 'THIS REPO',
@@ -77,9 +80,10 @@ const postRouteEx = async() => {
     console.log(resultJoinTableInsertion)
   } catch(e){
     console.log(e.message)
-    // not a real route res.redirect('/project/catshow')
+    // not a real route but then might redirect
+    // res.redirect('/projects')
   }
 }
 // call the function
-postRouteEx()
+// postRouteEx()
 
