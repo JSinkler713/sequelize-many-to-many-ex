@@ -1,0 +1,10 @@
+<h1>Category: <%= category.name %></h1>
+
+<hr />
+<h3>Related Projects</h3>
+<% for (let i=0; i<category.projects.length; i++) { %>
+<p><a href='/projects/<%=category.projects[i].id %>' ><%= category.projects[i].name %></a></p>
+<br />
+<% } %>
+
+<a href="/">&larr; Back Home</a>
