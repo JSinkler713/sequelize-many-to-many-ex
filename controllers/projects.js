@@ -26,6 +26,21 @@ router.post('/', async(req, res) => {
   }
 })
 
+router.post('/:id', async(req, res)=> {
+  try {
+  const project = await db.project.findByPk(req.params.id)
+  const [category, wasCreated] = await db.category.findOrCreate({
+    where: {
+      name: req.body.category
+    }
+  })
+  await category.addProject(project)
+  res.redirect(`/projects/${req.params.id}`)
+  } catch(err) {
+    console.error(err)
+  }
+})
+
 // GET /projects/new - display form for creating a new project
 router.get('/new', (req, res) => {
   res.render('projects/new')
